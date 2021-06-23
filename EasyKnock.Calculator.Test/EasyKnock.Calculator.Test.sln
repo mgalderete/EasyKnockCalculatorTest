@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31410.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyKnock.Calculator.Test", "EasyKnock.Calculator.Test\EasyKnock.Calculator.Test.csproj", "{A5F7AE82-8A66-4FF0-B855-848279F09030}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A5F7AE82-8A66-4FF0-B855-848279F09030}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5F7AE82-8A66-4FF0-B855-848279F09030}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5F7AE82-8A66-4FF0-B855-848279F09030}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5F7AE82-8A66-4FF0-B855-848279F09030}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F92676DC-99A7-4DEC-91DD-8F46593E86E9}
+	EndGlobalSection
+EndGlobal

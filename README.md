@@ -1,6 +1,6 @@
 # EasyNock's Calculator Test
 
-This project contains end to end test coverage for EasyNock'sk calculator.
+This project contains end to end test coverage for EasyNock's calculator.
 
 Instructions to run this project:
 

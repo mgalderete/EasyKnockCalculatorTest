@@ -7,6 +7,7 @@ using OpenQA.Selenium.Firefox;
 using EasyKnock.Calculator.Test.Pages;
 using System.IO;
 using OpenQA.Selenium.Interactions;
+using EasyKnock.Calculator.Test.Utilities;
 
 namespace EasyKnock.Calculator.Test.Tests
 {
@@ -91,8 +92,8 @@ namespace EasyKnock.Calculator.Test.Tests
         /// 1) Go to https://www.easyknock.com/programs/sellstay/
         /// 2) Scroll down to Calculator to "How Much Cash Can You Access?" section
         /// 3) Enter Home Value
-        /// 4) Enter Home Balance
-        /// 4) Enter Other Lines
+        /// 4) Enter Mortage Balance
+        /// 4) Enter Other Liens
         /// 5) Click on Calculate button
         /// </summary>
         [Test]
@@ -115,17 +116,107 @@ namespace EasyKnock.Calculator.Test.Tests
         /// 1) Go to https://www.easyknock.com/programs/sellstay/
         /// 2) Scroll down to Calculator to "How Much Cash Can You Access?" section
         /// 3) Enter Home Value
-        /// 4) Enter Home Balance
-        /// 4) Enter Other Lines
+        /// 4) Enter Mortage Balance
+        /// 4) Enter Other Liens
         /// 5) Click on Calculate button
         /// </summary>
         [Test]
-        [TestCase(200000, 150000, 5000)]
+        [TestCase(2000000, 150000, 5000)]
         public void TC_CALCULATOR_003(double homeValue, double homeMortage, double otherLiens)
         {
             _homepage.CalaculateWithEasyNock(homeValue, homeMortage, otherLiens);
 
             Assert.AreEqual("Sorry! Based on the info you provided, you may not qualify for an EasyKnock program.", _homepage.NotQualifiedMessage.Text);
+        }
+
+        /// <summary>
+        /// Test Case ID: TC_CALCULATOR_004
+        /// Test Scenario: Verify that calculator is displaying correct results with using only Mortage Balance and that depending the formula should be 0 or more.
+        /// Steps:
+        /// 1) Go to https://www.easyknock.com/programs/sellstay/
+        /// 2) Scroll down to Calculator to "How Much Cash Can You Access?" section
+        /// 3) Enter Home Value
+        /// 4) Enter Mortage Balance
+        /// 5) Click on Calculate button
+        /// </summary>
+        [Test]
+        [TestCase(550000, 15000)]
+        public void TC_CALCULATOR_004(double homeValue, double homeMortage)
+        {
+            double localCalculation = _homepage.CalculateWIthLocalSystem(homeValue, homeMortage, 0);
+
+            _homepage.CalaculateWithEasyNock(homeValue, homeMortage, 0);
+            double easyKnockCalculation = double.Parse(_homepage.EstimatedCash.Text.Replace("$", "").Replace(",", ""));
+
+            Assert.AreEqual(localCalculation, easyKnockCalculation);
+        }
+
+        /// <summary>
+        /// Test Case ID: TC_CALCULATOR_005
+        /// Test Scenario: Verify that calculator is displaying correct results with using only Mortage Balance and that depending the formula should be 0 or more.
+        /// Steps:
+        /// 1) Go to https://www.easyknock.com/programs/sellstay/
+        /// 2) Scroll down to Calculator to "How Much Cash Can You Access?" section
+        /// 3) Enter Home Value
+        /// 4) Enter Other Liens
+        /// 5) Click on Calculate button
+        /// </summary>
+        [Test]
+        [TestCase(5000000, 15000)]
+        public void TC_CALCULATOR_005(double homeValue, double otherLiens)
+        {
+            double localCalculation = _homepage.CalculateWIthLocalSystem(homeValue, 0, otherLiens);
+
+            _homepage.CalaculateWithEasyNock(homeValue, 0, otherLiens);
+            double easyKnockCalculation = double.Parse(_homepage.EstimatedCash.Text.Replace("$", "").Replace(",", ""));
+
+            Assert.AreEqual(localCalculation, easyKnockCalculation);
+        }
+
+        /// <summary>
+        /// Test Case ID: TC_CALCULATOR_006
+        /// Test Scenario: Verify that calculator is displaying correct projected range using Mortage Balance and Other Liens and that depending the formula should be 0 or more.
+        /// Note: Don't know what's the calculus or formula to get the range but this could be a test for that.
+        /// Steps:
+        /// 1) Go to https://www.easyknock.com/programs/sellstay/
+        /// 2) Scroll down to Calculator to "How Much Cash Can You Access?" section
+        /// 3) Enter Home Value
+        /// 4) Enter Mortage Balance
+        /// 5) Enter Other Liens
+        /// 6) Click on Calculate button
+        /// </summary>
+        [Test]
+        [TestCase(3500000, 12000, 3000)]
+        public void TC_CALCULATOR_006(double homeValue, double homeMortage, double otherLiens)
+        {
+            _homepage.CalaculateWithEasyNock(homeValue, homeMortage, otherLiens);
+            double easyKnockCalculation = double.Parse(_homepage.EstimatedCash.Text.Replace("$", "").Replace(",", ""));
+
+            Assert.IsTrue(_homepage.ProjectedRange.Text.Contains(_homepage.EstimatedCash.Text));
+        }
+
+        /// <summary>
+        /// Test Case ID: TC_CALCULATOR_007
+        /// Test Scenario: Verify that Get Offer button is redirecting to the correct page.
+        /// Note: Don't know what's the calculus or formula to get the range but this could be a test for that.
+        /// Steps:
+        /// 1) Go to https://www.easyknock.com/programs/sellstay/
+        /// 2) Scroll down to Calculator to "How Much Cash Can You Access?" section
+        /// 3) Enter Home Value
+        /// 4) Enter Mortage Balance
+        /// 5) Enter Other Liens
+        /// 6) Click on Calculate button
+        /// </summary>
+        [Test]
+        [TestCase(4600000, 12000, 3000)]
+        public void TC_CALCULATOR_007(double homeValue, double homeMortage, double otherLiens)
+        {
+            _homepage.CalaculateWithEasyNock(homeValue, homeMortage, otherLiens);
+
+
+            LocatorHelper.ClickWithJavaScript(_homepage.GetMyOfferButton, _driver);
+
+            Assert.IsTrue(_driver.Url.Contains("getoffer")); //In real life project I would add another page object for get offer page.
         }
 
         /// <summary>

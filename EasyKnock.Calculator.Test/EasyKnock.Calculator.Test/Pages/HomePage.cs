@@ -4,6 +4,7 @@ using System.Linq;
 using OpenQA.Selenium;
 using System;
 using System.Data;
+using EasyKnock.Calculator.Test.Utilities;
 
 namespace EasyKnock.Calculator.Test.Pages
 {
@@ -63,7 +64,7 @@ namespace EasyKnock.Calculator.Test.Pages
         #endregion
 
         /// <summary>
-        /// Description: This method performs any arithmetic operation contained in a string, useful to have a comparative value.
+        /// Description: This method performs the operation based on the formula to have a comparative value.
         /// </summary>
 
         public double CalculateWIthLocalSystem(double homeValue, double MortageBalance, double OtherLiens)
@@ -71,14 +72,17 @@ namespace EasyKnock.Calculator.Test.Pages
             return (homeValue * formulaValue - MortageBalance - OtherLiens);
         }
 
+        /// <summary>
+        /// Description: This method performs any arithmetic operation contained in a string, useful to have a comparative value.
+        /// </summary>
+
         public void CalaculateWithEasyNock(double homeValue, double mortageBalance, double otherLiens)
         {
             HomeValue.SendKeys(homeValue.ToString());
             MortageBalance.SendKeys(mortageBalance.ToString());
             OtherLiens.SendKeys(otherLiens.ToString());
 
-            IJavaScriptExecutor executor = (IJavaScriptExecutor)_driver;
-            executor.ExecuteScript("arguments[0].click();", CalculateButton);
+            LocatorHelper.ClickWithJavaScript(CalculateButton, _driver);         
         }
 
     }

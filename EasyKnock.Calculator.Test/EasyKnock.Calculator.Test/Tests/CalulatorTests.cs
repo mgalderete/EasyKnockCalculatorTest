@@ -38,10 +38,10 @@ namespace EasyKnock.Calculator.Test.Tests
             switch (_configuration["Browser"])
             {
                 case "Firefox":
-                    _driver = new FirefoxDriver("C:\\drivers"); ;
+                    _driver = new FirefoxDriver(_configuration["DriversPath"]); ;
                     break;
                 case "Chrome":
-                    _driver = new ChromeDriver("C:\\drivers");
+                    _driver = new ChromeDriver(_configuration["DriversPath"]);
                     break;
                 default:
                     throw new Exception("Invalid browser");
